@@ -1,0 +1,31 @@
+{
+  "name": "blog-backend",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Backend service for blog",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "nodemon --config .nodemon.config.json src/index.js",
+    "test": "jest"
+  },
+  "author": "Oleksandr Bondarchuk <alex.coockoo@gmail.com> (https://github.com/coockoo)",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-plugin-require-path-exists": "^1.1.9",
+    "nodemon": "^2.0.2",
+    "prettier": "^2.0.2"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-graphql": "^0.9.0",
+    "graphql": "^15.0.0",
+    "http-shutdown": "^1.2.2",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.20.13",
+    "lodash": "^4.17.15",
+    "on-finished": "^2.3.0",
+    "pg": "^8.0.0"
+  }
+}
