@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-POSTGRES_NAME=cda-postgres
+POSTGRES_NAME=blog-postgres
 DIR=$(dirname $(pwd))/$(basename $(pwd))
-POSTGRES_DB=blogdb
 POSTGRES_VERSION=11.4-alpine
 
 function cleanup() {
@@ -18,9 +17,10 @@ docker run \
   --rm \
   --detach \
   --publish 5432:5432 \
+  --env-file $DIR/postgres/dev.env \
+  --volume $DIR/postgres/init.sh:/docker-entrypoint-initdb.d/init.sh \
   postgres:$POSTGRES_VERSION
 
 sleep 3
 
 docker logs -f $POSTGRES_NAME
-

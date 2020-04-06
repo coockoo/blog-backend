@@ -20,7 +20,7 @@ module.exports = {
       host: getEnv('KNEX_HOST', 'localhost'),
       user: getEnv('KNEX_USER', 'app'),
       password: getEnv('KNEX_PASSWORD', 'app'),
-      database: getEnv('KNEX_DATABASE', 'cdadb'),
+      database: getEnv('KNEX_DATABASE', 'blogdb'),
     },
     // debug: env === 'development',
   },
