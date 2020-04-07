@@ -1,6 +1,7 @@
 {
   "name": "blog-backend",
   "private": true,
+  "repository": "https://github.com/coockoo/blog-backend",
   "version": "1.0.0",
   "description": "Backend service for blog",
   "main": "src/index.js",
