@@ -5,6 +5,10 @@ on:
     branches:
       - master
 
+env:
+  TAG: eu.gcr.io/${{ secrets.GCP_PROJECT }}/blog-backend:latest
+
+
 jobs:
   setup-build-publish-deploy:
     name: Setup, Build, Publish, and Deploy
@@ -12,3 +16,31 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Setup gcloud CLI
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          version: '286.0.0'
+          service_account_email: ${{ secrets.GCP_RUN_SA_EMAIL }}
+          service_account_key: ${{ secrets.GCP_RUN_SA_KEY }}
+          project_id: ${{ secrets.GCP_PROJECT }}
+
+      - name: Configure docker via Google Cloud auth
+        run: |
+          gcloud auth configure-docker
+
+      - name: Build the Docker image
+        run: |
+          docker build -t $TAG
+
+      - name: Push the Docker image to Google Container Registry
+        run: |
+          docker push $TAG
+
+      - name: Deploy image to Cloud Run
+        run: |-
+          gcloud run deploy "$SERVICE_NAME" \
+            --quiet \
+            --image "$TAG" \
+            --platform "managed" \
+            --allow-unauthenticated
