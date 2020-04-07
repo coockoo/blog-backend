@@ -1,4 +1,4 @@
-name: Apply migrations
+name: Deploy backend
 
 on:
   push:
@@ -9,6 +9,7 @@ env:
   TAG: eu.gcr.io/${{ secrets.GCP_PROJECT }}/blog-backend:latest
   SERVICE_NAME: blog-backend
   REGION: europe-west4
+  PORT: 3000
 
 
 jobs:
@@ -46,4 +47,5 @@ jobs:
             --quiet \
             --image "$TAG" \
             --platform "managed" \
+            --port "$PORT" \
             --allow-unauthenticated
