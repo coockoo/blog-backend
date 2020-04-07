@@ -4,7 +4,7 @@ WORKDIR /build
 
 COPY package*.json ./
 
-RUN yarn install
+RUN npm ci
 
 FROM node:12.16.1-alpine
 
