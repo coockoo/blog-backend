@@ -7,6 +7,7 @@ on:
 
 env:
   TAG: eu.gcr.io/${{ secrets.GCP_PROJECT }}/blog-backend:latest
+  SERVICE_NAME: blog-backend
 
 
 jobs:
