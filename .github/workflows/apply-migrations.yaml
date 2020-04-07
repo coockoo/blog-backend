@@ -31,7 +31,7 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          docker build -t $TAG
+          docker build -t $TAG .
 
       - name: Push the Docker image to Google Container Registry
         run: |
