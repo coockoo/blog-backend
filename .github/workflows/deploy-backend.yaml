@@ -41,7 +41,7 @@ jobs:
           docker push $TAG
 
       - name: Deploy image to Cloud Run
-        run: |-
+        run: |
           gcloud run deploy "$SERVICE_NAME" \
             --region "$REGION" \
             --quiet \
