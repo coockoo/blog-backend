@@ -8,6 +8,7 @@ on:
 env:
   TAG: eu.gcr.io/${{ secrets.GCP_PROJECT }}/blog-backend:latest
   SERVICE_NAME: blog-backend
+  REGION: europe-west4
 
 
 jobs:
@@ -41,6 +42,7 @@ jobs:
       - name: Deploy image to Cloud Run
         run: |-
           gcloud run deploy "$SERVICE_NAME" \
+            --region "$REGION" \
             --quiet \
             --image "$TAG" \
             --platform "managed" \
