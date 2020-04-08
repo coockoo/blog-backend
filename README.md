@@ -6,3 +6,4 @@
 
 - Add `--add-cloudsql-instances` to deploy
   https://cloud.google.com/sdk/gcloud/reference/run/deploy
+- Check if it's working
