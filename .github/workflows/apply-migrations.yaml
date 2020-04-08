@@ -31,7 +31,8 @@ jobs:
         run: |
           wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy -q
           chmod +x cloud_sql_proxy
-          ./cloud_sql_proxy -dir=/cloudsql -instances="$GCP_DB_INSTANCE" -token="$GCP_RUN_SA_KEY" &
+          echo "$GCP_RUN_SA_KEY" > /temp/gcp-key.json
+          ./cloud_sql_proxy -dir=/cloudsql -instances="$GCP_DB_INSTANCE" -credential_file=/temp/gcp-key.json
           docker run \
             --name "$SERVICE_NAME" \
             --env DB_USER="$DB_USER" \
