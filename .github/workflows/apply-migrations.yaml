@@ -27,12 +27,19 @@ jobs:
         run: |
           docker build -t $TAG migrator/
 
+      - name: Install Google Cloud SQL proxy
+        run: |
+          wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O "$HOME/cloud_sql_proxy" -q
+          chmod +x "$HOME/cloud_sql_proxy"
+
+      - name: Create GCP Key file
+        run: |
+          echo "$GCP_CLOUDSQL_SA_KEY" > "$HOME/gcp-key.json"
+          chown 777 "$HOME/gcp-key.json"
+
       - name: Run migrator
         run: |
-          wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy -q
-          chmod +x cloud_sql_proxy
-          echo "$GCP_CLOUDSQL_SA_KEY" > ./gcp-key.json
-          ./cloud_sql_proxy -dir="$HOME/cloudsql" -instances="$GCP_DB_INSTANCE" -credential_file=./gcp-key.json &
+          $HOME/cloud_sql_proxy -dir="$HOME/cloudsql" -instances="$GCP_DB_INSTANCE" -credential_file="$HOME/gcp-key.json" &
           docker run \
             --name "$SERVICE_NAME" \
             --env DB_USER="$DB_USER" \
