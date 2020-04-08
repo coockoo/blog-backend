@@ -35,7 +35,6 @@ jobs:
       - name: Create GCP Key file
         run: |
           echo "$GCP_CLOUDSQL_SA_KEY" > "$HOME/gcp-key.json"
-          chown 777 "$HOME/gcp-key.json"
 
       - name: Run migrator
         run: |
