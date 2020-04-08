@@ -12,6 +12,8 @@ env:
   DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
   DB_NAME: ${{ secrets.DB_NAME }}
   DB_HOST: ${{ secrets.DB_HOST }}
+  GCP_DB_INSTANCE: ${{ secrets.GCP_DB_INSTANCE }}
+  GCP_RUN_SA_KEY: ${{ secrets.GCP_RUN_SA_KEY }}
 
 
 jobs:
@@ -26,8 +28,13 @@ jobs:
         run: |
           docker build -t $TAG migrator/
 
+      - name: Get Cloud SQL Proxy
+        run: |
+          go get github.com/GoogleCloudPlatform/cloudsql-proxy/cmd/cloud_sql_proxy
+
       - name: Run migrator
         run: |
+          ./cloud_sql_proxy -dir=/cloudsql -instances="$GCP_DB_INSTANCE" -token=$GCP_RUN_SA_KEY &
           docker run \
             --name "$SERVICE_NAME" \
             --env DB_USER="$DB_USER" \
