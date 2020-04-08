@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 POSTGRES_NAME=blog-postgres
+MIGRATOR_NAME=cda-migrator
 DIR=$(dirname $(pwd))/$(basename $(pwd))
 POSTGRES_VERSION=11.4-alpine
 
@@ -22,5 +23,16 @@ docker run \
   postgres:$POSTGRES_VERSION
 
 sleep 3
+
+docker build -t $MIGRATOR_NAME $DIR/migrator
+docker run \
+  --rm \
+  --name $MIGRATOR_NAME \
+  --link $POSTGRES_NAME:database \
+  --env DB_USER=app \
+  --env DB_PASSWORD=app \
+  --env DB_NAME=blogdb \
+  --env DB_HOST=database \
+  $MIGRATOR_NAME
 
 docker logs -f $POSTGRES_NAME
