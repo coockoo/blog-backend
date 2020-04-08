@@ -30,6 +30,7 @@ async function applyMigration(knex, migrationsDir, migration) {
 }
 
 async function applyMigrations() {
+  console.log('ENV', process.env);
   const knex = Knex({
     client: 'pg',
     connection: {
