@@ -38,6 +38,7 @@ jobs:
 
       - name: Run migrator
         run: |
+          mkdir "$HOME/cloudsql"; chmod 777 "$HOME/cloudsql"
           $HOME/cloud_sql_proxy -dir="$HOME/cloudsql" -instances="$GCP_DB_INSTANCE" -credential_file="$HOME/gcp-key.json" &
           docker run \
             --name "$SERVICE_NAME" \
