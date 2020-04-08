@@ -38,4 +38,5 @@ jobs:
             --env DB_PASSWORD="$DB_PASSWORD" \
             --env DB_NAME="$DB_NAME" \
             --env DB_HOST="/cloudsql/$GCP_DB_INSTANCE" \
+            --volume /cloudsql:/cloudsql \
             "$TAG"
