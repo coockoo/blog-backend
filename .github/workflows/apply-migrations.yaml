@@ -29,8 +29,8 @@ jobs:
 
       - name: Run migrator
         run: |
-          wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy -q & \
-          chmod +x cloud_sql_proxy & \
+          wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy -q
+          chmod +x cloud_sql_proxy
           ./cloud_sql_proxy -dir=/cloudsql -instances="$GCP_DB_INSTANCE" -token="$GCP_RUN_SA_KEY" & \
           docker run \
             --name "$SERVICE_NAME" \
