@@ -11,7 +11,6 @@ env:
   DB_USER: ${{ secrets.DB_USER }}
   DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
   DB_NAME: ${{ secrets.DB_NAME }}
-  DB_HOST: ${{ secrets.DB_HOST }}
   GCP_DB_INSTANCE: ${{ secrets.GCP_DB_INSTANCE }}
   GCP_RUN_SA_KEY: ${{ secrets.GCP_RUN_SA_KEY }}
 
@@ -30,7 +29,7 @@ jobs:
 
       - name: Run migrator
         run: |
-          wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy & \
+          wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy -q & \
           chmod +x cloud_sql_proxy & \
           ./cloud_sql_proxy -dir=/cloudsql -instances="$GCP_DB_INSTANCE" -token="$GCP_RUN_SA_KEY" & \
           docker run \
@@ -38,5 +37,5 @@ jobs:
             --env DB_USER="$DB_USER" \
             --env DB_PASSWORD="$DB_PASSWORD" \
             --env DB_NAME="$DB_NAME" \
-            --env DB_HOST="$DB_HOST" \
+            --env DB_HOST="/cloudsql/$GCP_DB_INSTANCE" \
             "$TAG"
