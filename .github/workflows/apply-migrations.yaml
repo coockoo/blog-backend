@@ -32,12 +32,12 @@ jobs:
           wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy -q
           chmod +x cloud_sql_proxy
           echo "$GCP_CLOUDSQL_SA_KEY" > ./gcp-key.json
-          ./cloud_sql_proxy -dir="$GITHUB_WORKSPACE/cloudsql" -instances="$GCP_DB_INSTANCE" -credential_file=./gcp-key.json &
+          ./cloud_sql_proxy -dir="$HOME/cloudsql" -instances="$GCP_DB_INSTANCE" -credential_file=./gcp-key.json &
           docker run \
             --name "$SERVICE_NAME" \
             --env DB_USER="$DB_USER" \
             --env DB_PASSWORD="$DB_PASSWORD" \
             --env DB_NAME="$DB_NAME" \
             --env DB_HOST="/cloudsql/$GCP_DB_INSTANCE" \
-            --volume "$GITHUB_WORKSPACE/cloudsql":/cloudsql \
+            --volume "$HOME/cloudsql":/cloudsql \
             "$TAG"
