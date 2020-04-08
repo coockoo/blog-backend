@@ -1,6 +1,7 @@
 # Blog backend
 
 ![Deploy backend](https://github.com/coockoo/blog-backend/workflows/Deploy%20backend/badge.svg?branch=master)
+![Apply migrations](https://github.com/coockoo/blog-backend/workflows/Apply%20migrations/badge.svg?branch=master)
 
 ## TODO
 
