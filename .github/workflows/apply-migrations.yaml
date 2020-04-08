@@ -28,13 +28,11 @@ jobs:
         run: |
           docker build -t $TAG migrator/
 
-      - name: Get Cloud SQL Proxy
-        run: |
-          go get github.com/GoogleCloudPlatform/cloudsql-proxy/cmd/cloud_sql_proxy
-
       - name: Run migrator
         run: |
-          ./cloud_sql_proxy -dir=/cloudsql -instances="$GCP_DB_INSTANCE" -token=$GCP_RUN_SA_KEY &
+          wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy & \
+          chmod +x cloud_sql_proxy & \
+          ./cloud_sql_proxy -dir=/cloudsql -instances="$GCP_DB_INSTANCE" -token="$GCP_RUN_SA_KEY" & \
           docker run \
             --name "$SERVICE_NAME" \
             --env DB_USER="$DB_USER" \
