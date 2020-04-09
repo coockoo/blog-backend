@@ -11,6 +11,9 @@ env:
   REGION: europe-west4
   PORT: 3000
   GCP_DB_INSTANCE: ${{ secrets.GCP_DB_INSTANCE }}
+  DB_USER: ${{ secrets.DB_USER }}
+  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+  DB_NAME: ${{ secrets.DB_NAME }}
 
 jobs:
   setup-build-publish-deploy:
@@ -49,4 +52,9 @@ jobs:
             --platform "managed" \
             --port "$PORT" \
             --add-cloudsql-instances "$GCP_DB_INSTANCE" \
+            --set-env-vars \
+              DB_USER="$DB_USER",\
+              DB_PASSWORD="$DB_PASSWORD",\
+              DB_NAME="$DB_NAME",\
+              DB_HOST="/cloudsql/$GCP_DB_INSTANCE"\
             --allow-unauthenticated
