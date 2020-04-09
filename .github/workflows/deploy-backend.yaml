@@ -10,7 +10,7 @@ env:
   SERVICE_NAME: blog-backend
   REGION: europe-west4
   PORT: 3000
-
+  GCP_DB_INSTANCE: ${{ secrets.GCP_DB_INSTANCE }}
 
 jobs:
   setup-build-publish-deploy:
@@ -48,4 +48,5 @@ jobs:
             --image "$TAG" \
             --platform "managed" \
             --port "$PORT" \
+            --add-cloudsql-instances "$GCP_DB_INSTANCE" \
             --allow-unauthenticated
