@@ -1,8 +1,14 @@
+const { GraphQLError } = require('graphql');
+
 const { UnauthorizedError, ValidationError } = require('../errors');
 
 const log = require('../log');
 
 module.exports = function customFormatErrorFn(error) {
+  if (error instanceof GraphQLError) {
+    return error;
+  }
+
   const { message, locations, path, originalError } = error;
 
   let extensions = {};
