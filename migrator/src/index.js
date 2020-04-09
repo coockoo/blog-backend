@@ -30,7 +30,6 @@ async function applyMigration(knex, migrationsDir, migration) {
 }
 
 async function applyMigrations() {
-  console.log('ENV', process.env);
   const knex = Knex({
     client: 'pg',
     connection: {
@@ -75,7 +74,8 @@ async function main() {
     await applyMigrations();
     console.log('Migrations applied successfully!');
   } catch (error) {
-    console.error('Error happened during apply migrations process', error);
+    console.error('Failed to apply migrations!');
+    console.error(error);
     process.exit(1);
   }
 }
