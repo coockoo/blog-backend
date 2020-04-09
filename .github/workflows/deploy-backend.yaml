@@ -52,9 +52,5 @@ jobs:
             --platform="managed" \
             --port="$PORT" \
             --add-cloudsql-instances="$GCP_DB_INSTANCE" \
-            --set-env-vars=\
-              DB_USER="$DB_USER",\
-              DB_PASSWORD="$DB_PASSWORD",\
-              DB_NAME="$DB_NAME",\
-              DB_HOST="/cloudsql/$GCP_DB_INSTANCE" \
+            --set-env-vars=DB_USER="$DB_USER",DB_PASSWORD="$DB_PASSWORD",DB_NAME="$DB_NAME",DB_HOST="/cloudsql/$GCP_DB_INSTANCE" \
             --allow-unauthenticated
