@@ -17,10 +17,10 @@ module.exports = {
   knex: {
     client: 'pg',
     connection: {
-      host: getEnv('KNEX_HOST', 'localhost'),
-      user: getEnv('KNEX_USER', 'app'),
-      password: getEnv('KNEX_PASSWORD', 'app'),
-      database: getEnv('KNEX_DATABASE', 'blogdb'),
+      host: getEnv('DB_HOST', 'localhost'),
+      user: getEnv('DB_USER', 'app'),
+      password: getEnv('DB_PASSWORD', 'app'),
+      database: getEnv('DB_NAME', 'blogdb'),
     },
     // debug: env === 'development',
   },
