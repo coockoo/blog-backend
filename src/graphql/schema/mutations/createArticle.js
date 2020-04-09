@@ -20,7 +20,7 @@ module.exports = {
   resolve: async (root, args, ctx) => {
     await isAuthorized(ctx);
 
-    const article = await knex('articles')
+    const [article] = await knex('articles')
       .insert({
         authorUserId: ctx.user.id,
         title: args.title,
