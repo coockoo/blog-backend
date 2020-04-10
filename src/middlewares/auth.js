@@ -12,9 +12,7 @@ module.exports = function createAuthMiddleware() {
     if (token) {
       try {
         const payload = await verifyJWT(token);
-        if (payload.exp < Date.now()) {
-          user = { id: payload.sub }; // TODO Add checks and other stuff
-        }
+        user = { id: payload.sub }; // TODO Add checks and other stuff
       } catch (error) {
         log.warn(`cannot get user from JWT: ${error.message}`);
       }
