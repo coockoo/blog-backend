@@ -1,32 +1,36 @@
-const { GraphQLError } = require('graphql');
-
 const { UnauthorizedError, ValidationError } = require('../errors');
 
 const log = require('../log');
 
-module.exports = function customFormatErrorFn(error) {
-  if (error instanceof GraphQLError) {
-    return error;
+module.exports = function customFormatErrorFn(graphQLError) {
+  const { locations, path, originalError: error } = graphQLError;
+
+  if (!error) {
+    return graphQLError;
   }
 
-  const { message, locations, path, originalError } = error;
-
+  let { message } = graphQLError;
   let extensions = {};
 
-  if (originalError instanceof UnauthorizedError || originalError instanceof ValidationError) {
+  if (error instanceof UnauthorizedError || error instanceof ValidationError) {
     extensions = {
       ...extensions,
-      errorName: originalError.name,
+      errorName: error.name,
     };
-    log.info(`${originalError.name} (${path}): ${originalError.message}`);
+    log.info(`${error.name} (${path}): ${error.message}`);
   } else {
-    log.error(originalError || error);
+    message = 'Internal server error';
+    extensions = {
+      ...extensions,
+      errorName: 'InternalServerError',
+    };
+    log.error(error);
   }
 
-  if (originalError instanceof ValidationError) {
+  if (error instanceof ValidationError) {
     extensions = {
       ...extensions,
-      validationErrors: originalError.validationErrors,
+      validationErrors: error.validationErrors,
     };
   }
 
