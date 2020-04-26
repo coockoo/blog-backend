@@ -7,6 +7,7 @@ const ArticleType = require('../types/Article');
 
 const createArticleArgs = {
   title: { type: new GraphQLNonNull(GraphQLString) },
+  outline: { type: new GraphQLNonNull(GraphQLString) },
   body: { type: new GraphQLNonNull(GraphQLString) },
 };
 
@@ -24,6 +25,7 @@ module.exports = {
       .insert({
         authorUserId: ctx.user.id,
         title: args.title,
+        outline: args.outline,
         body: args.body,
       })
       .returning('*');

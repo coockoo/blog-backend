@@ -35,4 +35,6 @@ docker run \
   --env DB_HOST=database \
   $MIGRATOR_NAME
 
+psql postgres://app:app@localhost:5432/blogdb -c "insert into users (nickname, password, first_name, last_name) values ('alex', '\$2y\$12\$z2m8uVhPpt2/cHNT6nABsOkXFrl685t4segzjipfSqTTwUKiize3m', 'Oleksandr', 'Bondarchuk')"
+
 docker logs -f $POSTGRES_NAME
