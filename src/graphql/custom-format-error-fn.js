@@ -1,4 +1,4 @@
-const { NotFoundError, UnauthorizedError, ValidationError } = require('../errors');
+const { ForbiddenError, NotFoundError, UnauthorizedError, ValidationError } = require('../errors');
 
 const log = require('../log');
 
@@ -13,6 +13,7 @@ module.exports = function customFormatErrorFn(graphQLError) {
   let extensions = {};
 
   if (
+    error instanceof ForbiddenError ||
     error instanceof NotFoundError ||
     error instanceof UnauthorizedError ||
     error instanceof ValidationError

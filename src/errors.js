@@ -5,6 +5,18 @@ class ExtendableError extends Error {
   }
 }
 
+class ForbiddenError extends ExtendableError {
+  constructor(message) {
+    super(message || 'Forbidden');
+  }
+}
+
+class NotFoundError extends ExtendableError {
+  constructor(message) {
+    super(message || 'Not Found');
+  }
+}
+
 class UnauthorizedError extends ExtendableError {
   constructor(message) {
     super(message || 'Unauthorized');
@@ -18,14 +30,9 @@ class ValidationError extends ExtendableError {
   }
 }
 
-class NotFoundError extends ExtendableError {
-  constructor(validationErrors, message) {
-    super(message || 'Not Found');
-  }
-}
-
 module.exports = {
+  ForbiddenError,
+  NotFoundError,
   UnauthorizedError,
   ValidationError,
-  NotFoundError,
 };

@@ -7,6 +7,7 @@ const ping = require('./queries/ping');
 const createArticle = require('./mutations/createArticle');
 const signIn = require('./mutations/signIn');
 const signUp = require('./mutations/signUp');
+const updateArticle = require('./mutations/updateArticle');
 
 module.exports = new GraphQLSchema({
   query: new GraphQLObjectType({
@@ -23,6 +24,7 @@ module.exports = new GraphQLSchema({
       createArticle,
       signIn,
       signUp,
+      updateArticle,
     },
   }),
 });

@@ -5,6 +5,7 @@ function hideSensitiveData(str) {
   return str.replace(/("?(?:token|password)"?\s*):(\s*")[^"]+(")/g, '$1:$2******$3');
 }
 
+// TODO: hide large bodies from the logging, as they clutter a lot
 module.exports = function createRequestLogger(logFn = () => {}) {
   return function requestLogger(req, res, next) {
     req.__startTime = Date.now();
