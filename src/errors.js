@@ -18,7 +18,14 @@ class ValidationError extends ExtendableError {
   }
 }
 
+class NotFoundError extends ExtendableError {
+  constructor(validationErrors, message) {
+    super(message || 'Not Found');
+  }
+}
+
 module.exports = {
   UnauthorizedError,
   ValidationError,
+  NotFoundError,
 };
