@@ -1,5 +1,6 @@
 const { GraphQLSchema, GraphQLObjectType } = require('graphql');
 
+const article = require('./queries/article');
 const articles = require('./queries/articles');
 const ping = require('./queries/ping');
 
@@ -12,6 +13,7 @@ module.exports = new GraphQLSchema({
     name: 'Query',
     fields: {
       articles,
+      article,
       ping,
     },
   }),

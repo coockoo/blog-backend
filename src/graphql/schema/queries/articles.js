@@ -1,4 +1,4 @@
-const { GraphQLNonNull } = require('graphql');
+const { GraphQLNonNull, GraphQLInt } = require('graphql');
 
 const knex = require('../../../services/knex');
 
@@ -7,8 +7,14 @@ const ArticlesListType = require('../types/ArticlesList');
 const DEFAULT_LIMIT = 10;
 const MAX_LIMIT = 1000;
 
+const articlesArgs = {
+  limit: { type: GraphQLInt },
+};
+
 module.exports = {
   name: 'Articles',
+
+  args: articlesArgs,
 
   type: new GraphQLNonNull(ArticlesListType),
 
