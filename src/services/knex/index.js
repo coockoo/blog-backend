@@ -1,7 +1,13 @@
 const knex = require('knex');
 const _ = require('lodash');
+const { types } = require('pg');
 
 const config = require('../../config');
+
+function parseTimestamp(value) {
+  return value === null ? null : new Date(value).toISOString();
+}
+types.setTypeParser(types.builtins.TIMESTAMPTZ, parseTimestamp);
 
 module.exports = knex({
   ...config.knex,
