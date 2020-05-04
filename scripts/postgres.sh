@@ -35,6 +35,26 @@ docker run \
   --env DB_HOST=database \
   $MIGRATOR_NAME
 
-psql postgres://app:app@localhost:5432/blogdb -c "insert into users (nickname, password, first_name, last_name) values ('alex', '\$2y\$12\$z2m8uVhPpt2/cHNT6nABsOkXFrl685t4segzjipfSqTTwUKiize3m', 'Oleksandr', 'Bondarchuk')"
+psql postgres://app:app@localhost:5432/blogdb <<-EOSQL
+  insert into users (nickname, password, first_name, last_name) values
+  ('alex', '\$2y\$12\$z2m8uVhPpt2/cHNT6nABsOkXFrl685t4segzjipfSqTTwUKiize3m', 'Oleksandr', 'Bondarchuk');
+
+  insert into articles (author_user_id, title, body, outline) values
+  (
+    1,
+    'Random article here',
+    'Hi there!
+
+
+This is my piece of \`code\`
+
+\`\`\`js
+const a = ''hi there!''
+\`\`\`
+
+This stuff is *awesome* . Some **editing** is going on here.',
+    'About you know, stuff'
+  );
+EOSQL
 
 docker logs -f $POSTGRES_NAME
