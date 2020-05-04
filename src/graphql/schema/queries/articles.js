@@ -24,7 +24,7 @@ module.exports = {
     const builder = knex('articles');
 
     const { count } = await builder.clone().count().first();
-    const rows = await builder.select().limit(limit);
+    const rows = await builder.select().limit(limit).orderBy('createdAt', 'desc');
 
     return { count, rows };
   },
