@@ -1,8 +1,9 @@
 const { GraphQLBoolean, GraphQLNonNull, GraphQLString } = require('graphql');
 const _ = require('lodash');
 const { nanoid } = require('nanoid');
+const ms = require('ms');
 
-const { signJWT, TOKEN_KIND } = require('../../../services/jwt');
+const { signJWT } = require('../../../services/jwt');
 const knex = require('../../../services/knex');
 const { comparePassword } = require('../../../services/password');
 
@@ -45,13 +46,21 @@ module.exports = {
 
     const payload = { sub: user.id };
 
-    const accessPayload = { ...payload, key: nanoid(12) };
-    const accessToken = await signJWT(accessPayload, TOKEN_KIND.ACCESS);
+    const accessPayload = {
+      ...payload,
+      key: nanoid(12),
+      exp: Math.floor((Date.now() + ms('1d')) / 1000),
+    };
+    const accessToken = await signJWT(accessPayload);
 
     let refreshToken = null;
-    const refreshPayload = { ...payload, key: nanoid(40) };
+    const refreshPayload = {
+      ...payload,
+      key: nanoid(40),
+      exp: Math.floor((Date.now() + ms('14d')) / 1000),
+    };
     if (args.withRefresh) {
-      refreshToken = await signJWT(refreshPayload, TOKEN_KIND.ACCESS);
+      refreshToken = await signJWT(refreshPayload);
     }
 
     const headers = _.get(ctx, 'headers');
@@ -60,10 +69,10 @@ module.exports = {
       origin: _.pick(headers, ['host', 'user-agent']),
 
       accessKey: accessPayload.key,
-      accessExpiresAt: new Date(), // TODO: Add date
+      accessExpiresAt: new Date(accessPayload.exp * 1000),
 
       refreshKey: args.withRefresh ? refreshPayload.key : null,
-      refreshExpiresAt: new Date(), // TODO: Add date
+      refreshExpiresAt: new Date(refreshPayload.exp * 1000),
     });
 
     return { accessToken, refreshToken };
