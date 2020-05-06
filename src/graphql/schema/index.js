@@ -5,6 +5,7 @@ const articles = require('./queries/articles');
 const ping = require('./queries/ping');
 
 const createArticle = require('./mutations/createArticle');
+const publishArticle = require('./mutations/publishArticle');
 const signIn = require('./mutations/signIn');
 // const signUp = require('./mutations/signUp');
 const updateArticle = require('./mutations/updateArticle');
@@ -22,6 +23,7 @@ module.exports = new GraphQLSchema({
     name: 'Mutation',
     fields: {
       createArticle,
+      publishArticle,
       signIn,
       // signUp,
       updateArticle,

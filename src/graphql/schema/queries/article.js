@@ -16,8 +16,12 @@ module.exports = {
 
   type: new GraphQLNonNull(ArticleType),
 
-  resolve: async (root, args) => {
-    const article = await knex('articles').first().where({ id: args.id });
+  resolve: async (root, args, ctx) => {
+    const builder = knex('articles').first().where({ id: args.id });
+    if (!ctx.user) {
+      builder.where({ isPublished: true });
+    }
+    const article = await builder;
     if (!article) {
       throw new NotFoundError('Cannot find article by given id');
     }
