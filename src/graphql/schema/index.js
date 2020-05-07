@@ -8,6 +8,7 @@ const createArticle = require('./mutations/createArticle');
 const publishArticle = require('./mutations/publishArticle');
 const signIn = require('./mutations/signIn');
 // const signUp = require('./mutations/signUp');
+const unpublishArticle = require('./mutations/unpublishArticle');
 const updateArticle = require('./mutations/updateArticle');
 
 module.exports = new GraphQLSchema({
@@ -26,6 +27,7 @@ module.exports = new GraphQLSchema({
       publishArticle,
       signIn,
       // signUp,
+      unpublishArticle,
       updateArticle,
     },
   }),
