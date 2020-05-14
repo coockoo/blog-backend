@@ -13,6 +13,7 @@ module.exports = new GraphQLObjectType({
 
     title: { type: new GraphQLNonNull(GraphQLString) },
     outline: { type: new GraphQLNonNull(GraphQLString) },
+    slug: { type: new GraphQLNonNull(GraphQLString) },
     body: { type: new GraphQLNonNull(GraphQLString) },
 
     isPublished: { type: new GraphQLNonNull(GraphQLBoolean) },

@@ -6,7 +6,8 @@ const knex = require('../../../services/knex');
 const ArticleType = require('../types/Article');
 
 const articleArgs = {
-  id: { type: new GraphQLNonNull(GraphQLID) },
+  id: { type: GraphQLID },
+  slug: { type: GraphQLID },
 };
 
 module.exports = {
@@ -17,13 +18,23 @@ module.exports = {
   type: new GraphQLNonNull(ArticleType),
 
   resolve: async (root, args, ctx) => {
-    const builder = knex('articles').first().where({ id: args.id });
+    const builder = knex('articles').first();
+
+    if (!args.id && !args.slug) {
+      throw new NotFoundError('Cannot find article');
+    }
+    if (args.id) {
+      builder.where({ id: args.id });
+    } else {
+      builder.where({ slug: args.slug });
+    }
+
     if (!ctx.user) {
       builder.where({ isPublished: true });
     }
     const article = await builder;
     if (!article) {
-      throw new NotFoundError('Cannot find article by given id');
+      throw new NotFoundError('Cannot find article');
     }
     return article;
   },

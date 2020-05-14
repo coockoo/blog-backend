@@ -12,10 +12,11 @@ const updateArticleArgs = {
   id: { type: new GraphQLNonNull(GraphQLID) },
   title: { type: GraphQLString },
   outline: { type: GraphQLString },
+  slug: { type: GraphQLString },
   body: { type: GraphQLString },
 };
 
-const UPDATE_FIELDS = ['title', 'outline', 'body'];
+const UPDATE_FIELDS = ['title', 'outline', 'body', 'slug'];
 
 module.exports = {
   name: 'UpdateArticle',
