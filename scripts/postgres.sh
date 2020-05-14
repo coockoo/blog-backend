@@ -39,7 +39,7 @@ psql postgres://app:app@localhost:5432/blogdb <<-EOSQL
   insert into users (nickname, password, first_name, last_name) values
   ('alex', '\$2y\$12\$z2m8uVhPpt2/cHNT6nABsOkXFrl685t4segzjipfSqTTwUKiize3m', 'Oleksandr', 'Bondarchuk');
 
-  insert into articles (author_user_id, title, body, outline) values
+  insert into articles (author_user_id, title, body, outline, slug) values
   (
     1,
     'Random article here',
@@ -53,7 +53,8 @@ const a = ''hi there!''
 \`\`\`
 
 This stuff is *awesome* . Some **editing** is going on here.',
-    'About you know, stuff'
+    'About you know, stuff',
+    'random-article-here'
   );
 EOSQL
 
